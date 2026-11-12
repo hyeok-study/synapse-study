@@ -1,7 +1,7 @@
 {
   "environment": {
     "date": "2026-11-12",
-    "node": "24.20.0",
+    "node": "22.14.0",
     "os": "Darwin",
     "arch": "arm64"
   },
