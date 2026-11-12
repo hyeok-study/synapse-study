@@ -1,0 +1,768 @@
+{
+  "environment": {
+    "date": "2026-11-12",
+    "node": "24.20.0",
+    "os": "Darwin",
+    "arch": "arm64"
+  },
+  "scope": "packages/backend/test/jest-unit.json; collectCoverageFrom src/**/*.(t|j)s",
+  "baseline": {
+    "numPassedTests": 74,
+    "numFailedTests": 0,
+    "numPendingTests": 0,
+    "numPassedTestSuites": 10,
+    "numFailedTestSuites": 0,
+    "success": true,
+    "cases": [
+      {
+        "name": "DocumentService DocumentService가 DI로 생성되면 서비스 인스턴스가 정상적으로 정의되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService createPortfolioWithText 유효한 제목/내용으로 포트폴리오 생성을 요청하면 documentId와 content가 포함된 결과가 반환되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService createPortfolioWithText 포트폴리오 생성 요청에서 제목이 공백이면 BadRequestException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService createPortfolioWithText 포트폴리오 생성 요청에서 내용이 공백이면 BadRequestException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService createPortfolioWithText 포트폴리오 생성 요청에서 트랜잭션 저장이 실패하면 예외가 전파되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService viewPortfolio 존재하는 포트폴리오 문서를 조회하면 title/content가 포함된 상세 정보가 반환되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService viewPortfolio 포트폴리오 조회 요청에서 문서가 존재하지 않으면 NotFoundException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService updatePortfolio 포트폴리오 수정 요청에서 title만 전달하면 title만 변경되어 저장되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService updatePortfolio 포트폴리오 수정 요청에서 content만 전달하면 content만 변경되어 저장되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService updatePortfolio 포트폴리오 수정 요청에서 문서가 없으면 NotFoundException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService updatePortfolio 포트폴리오 수정 요청에서 title이 공백이면 BadRequestException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService updatePortfolio 포트폴리오 수정 요청에서 content가 공백이면 BadRequestException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService createCoverLetter 유효한 제목과 QnA 목록으로 자소서 생성을 요청하면 documentId/content가 반환되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService createCoverLetter 자소서 생성 요청에서 title이 공백이면 BadRequestException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService createCoverLetter 자소서 생성 요청에서 QnA 중 question/answer가 공백이면 BadRequestException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService viewCoverLetter 자소서 조회 요청에서 문서가 없으면 NotFoundException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService viewCoverLetter 자소서 조회 요청에서 coverLetter 데이터가 누락되면 InternalServerErrorException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService updateCoverLetter 자소서 수정 요청에서 content만 변경하면 modifiedAt이 수동 갱신되어 저장되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService updateCoverLetter 자소서 수정 요청에서 title이 공백이면 BadRequestException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService updateCoverLetter 자소서 수정 요청에서 QnA 중 question/answer가 공백이면 BadRequestException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService updateCoverLetter 자소서 수정 트랜잭션에서 저장 결과가 없으면 InternalServerErrorException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService listDocuments 문서 목록 조회에서 page=1이면 repository에는 adjustedPage=0으로 전달되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService listDocuments 문서 목록 조회에서 page가 0 이하이면 adjustedPage는 0으로 보정되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService bulkDeleteDocuments (updated) 일괄 삭제 요청에서 일부 documentId가 누락되면 BadRequestException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService bulkDeleteDocuments (updated) 일괄 삭제 요청에서 모두 존재하고 delete가 전부 성공하면 success=true, failedDocuments=[]가 반환되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService bulkDeleteDocuments (updated) 일괄 삭제 요청에서 delete가 일부만 성공하면 remaining 조회 후 failedDocuments가 반환되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewService createTechInterview 유저가 유효한 문서 ID들로 기술면접 생성을 요청하면 인터뷰가 생성되고 첫 질문이 반환되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewService createTechInterview 유저가 요청한 문서 ID를 전부 찾지 못하면 BadRequestException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewService chatInterviewer 유저가 본인 인터뷰에서 다음 질문 생성을 요청하면 턴이 증가하고 다음 질문이 반환되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewService createInterviewFeedback 유저가 본인 인터뷰에 대해 피드백 생성을 요청하면 AI 피드백이 저장되고 score/feedback이 반환되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "KeySetStore 새로운 key에 addToSet을 호출하면 값이 저장되고 getSet으로 조회되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "KeySetStore 동일 key에 addToSet을 여러 번 호출하면 Set 특성상 중복 없이 저장되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "KeySetStore removeFromSet을 호출하면 특정 값이 Set에서 제거되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "KeySetStore clear를 호출하면 Set이 삭제되고 getSet은 빈 배열을 반환해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "KeySetStore addToNumber를 호출하면 숫자가 저장되고 getNumber로 조회되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "KeySetStore deleteNumber를 호출하면 숫자가 삭제되어 getNumber가 undefined를 반환해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "KeySetStore ttl이 0 이하이면 스케줄링하지 않으며 시간이 지나도 데이터가 유지되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "KeySetStore ttl이 지난 key는 cleanup 주기에서 자동 삭제되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "KeySetStore 같은 key에 다시 addToSet을 호출하면 TTL이 갱신되어 이전 만료 시점에 삭제되면 안 된다",
+        "status": "passed"
+      },
+      {
+        "name": "KeySetStore addToNumber도 TTL이 지나면 cleanup에서 자동 삭제되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "KeySetStore clear를 호출하면 스케줄에서도 제거되어 이후 cleanup 주기에서 추가 삭제 동작이 발생하지 않아야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "AuthService AuthService가 DI로 생성되면 서비스 인스턴스가 정상적으로 정의되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "AuthService googleLogin 기존 회원이 올바른 OAuth 코드로 로그인하면 accessToken/refreshToken이 발급되어 로그인되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "AuthService googleLogin 신규 회원이 올바른 OAuth 코드로 로그인하면 회원가입 후 accessToken/refreshToken이 발급되어 로그인되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "UserService UserService가 DI로 생성되면 서비스 인스턴스가 정상적으로 정의되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "UserService findExistingUser 존재하는 사용자 ID로 조회하면 사용자 엔티티가 반환되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "UserService findExistingUser 존재하지 않는 사용자 ID로 조회하면 NotFoundException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "UserService registerUser 신규 사용자 정보를 전달해 가입을 요청하면 USER 역할로 저장된 사용자 엔티티가 반환되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "UserService getUserProfile 존재하는 사용자 ID로 프로필 조회를 요청하면 (userId/email/profileUrl) 형태로 반환되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "UserService getUserProfile 존재하지 않는 사용자 ID로 프로필 조회를 요청하면 NotFoundException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "JwtAuthGuard canActivate Public Endpoint로 설정되어 있으면 토큰 없이도 접근이 허용되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "JwtAuthGuard canActivate Private Endpoint에서 유효한 Bearer 토큰을 전달하면 인증이 통과되고 request.user가 주입되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "JwtAuthGuard canActivate Private Endpoint에서 Authorization 헤더가 없으면 UnauthorizedException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "JwtAuthGuard canActivate Private Endpoint에서 Authorization 헤더가 Bearer 형식이 아니면 UnauthorizedException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "Jwt 발급/디코딩 통합 테스트 애세스 토큰을 발급하고 유효시간내의 토큰을 디코딩할 수 있다.",
+        "status": "passed"
+      },
+      {
+        "name": "Jwt 발급/디코딩 통합 테스트 유효하지 않은 토큰을 디코딩하면, \"유효하지 않은 토큰입니다.\" 예외를 반환한다.",
+        "status": "passed"
+      },
+      {
+        "name": "Jwt 발급/디코딩 통합 테스트 만료된 토큰을 디코딩하면, \"만료된 토큰입니다.\" 예외를 반환한다.",
+        "status": "passed"
+      },
+      {
+        "name": "Jwt 발급/디코딩 통합 테스트 리프레시 토큰을 발급하고 유효시간내의 토큰을 디코딩할 수 있다.",
+        "status": "passed"
+      },
+      {
+        "name": "Interview Entity validateUser 인터뷰 소유자가 자신의 인터뷰에 접근하면 예외 없이 통과되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "Interview Entity validateUser 인터뷰 소유자가 아닌 사용자가 접근하면 ForbiddenException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "Interview Entity calculateDuringTime 인터뷰가 종료되지 않은 상태에서 종료 시간을 전달하면 duringTime이 (종료-시작)으로 계산되어 저장되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "Interview Entity calculateDuringTime 이미 종료된 인터뷰에서 종료 시간을 다시 계산하려 하면 ForbiddenException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "Interview Entity calculateDuringTime 종료 시간이 시작 시간(createdAt)보다 빠르면 ForbiddenException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "Interview Entity calculateDuringTime 종료 시간이 시작 시간과 같으면 duringTime은 0으로 계산되어 저장되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "MinHeapScheduler executeAt이 더 이른 task를 push하면 peek는 가장 빠른 task를 반환해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "MinHeapScheduler pop을 호출하면 executeAt이 가장 작은 task부터 순서대로 반환되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "MinHeapScheduler remove를 호출하면 해당 key의 task가 힙에서 제거되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "MinHeapScheduler remove 대상이 존재하지 않으면 힙 상태는 변하지 않아야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "MinHeapScheduler 동일 key로 push/remove/push를 반복하면 마지막 push 값 기준으로 우선순위가 반영되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewEntity 단위 테스트 인터뷰 진행 시간을 계산한다.",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewEntity 단위 테스트 인터뷰 진행 시간이 이미 계산되어 있으면, 예외를 반환한다.",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewEntity 단위 테스트 인터뷰 진행 시간은 음수가 될 수 없다.",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewEntity 단위 테스트 사용자가 인터뷰의 소유자라면, validataeUser 메서드를 통과한다.",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewEntity 단위 테스트 사용자가 인터뷰의 소유자가 아니라면, validataeUser 메서드는 예외를 반환한다.",
+        "status": "passed"
+      }
+    ]
+  },
+  "current": {
+    "numPassedTests": 81,
+    "numFailedTests": 0,
+    "numPendingTests": 0,
+    "numPassedTestSuites": 11,
+    "numFailedTestSuites": 0,
+    "success": true,
+    "cases": [
+      {
+        "name": "DocumentService DocumentService가 DI로 생성되면 서비스 인스턴스가 정상적으로 정의되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService createPortfolioWithText 유효한 제목/내용으로 포트폴리오 생성을 요청하면 documentId와 content가 포함된 결과가 반환되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService createPortfolioWithText 포트폴리오 생성 요청에서 제목이 공백이면 BadRequestException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService createPortfolioWithText 포트폴리오 생성 요청에서 내용이 공백이면 BadRequestException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService createPortfolioWithText 포트폴리오 생성 요청에서 트랜잭션 저장이 실패하면 예외가 전파되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService viewPortfolio 존재하는 포트폴리오 문서를 조회하면 title/content가 포함된 상세 정보가 반환되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService viewPortfolio 포트폴리오 조회 요청에서 문서가 존재하지 않으면 NotFoundException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService updatePortfolio 포트폴리오 수정 요청에서 title만 전달하면 title만 변경되어 저장되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService updatePortfolio 포트폴리오 수정 요청에서 content만 전달하면 content만 변경되어 저장되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService updatePortfolio 포트폴리오 수정 요청에서 문서가 없으면 NotFoundException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService updatePortfolio 포트폴리오 수정 요청에서 title이 공백이면 BadRequestException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService updatePortfolio 포트폴리오 수정 요청에서 content가 공백이면 BadRequestException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService createCoverLetter 유효한 제목과 QnA 목록으로 자소서 생성을 요청하면 documentId/content가 반환되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService createCoverLetter 자소서 생성 요청에서 title이 공백이면 BadRequestException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService createCoverLetter 자소서 생성 요청에서 QnA 중 question/answer가 공백이면 BadRequestException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService viewCoverLetter 자소서 조회 요청에서 문서가 없으면 NotFoundException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService viewCoverLetter 자소서 조회 요청에서 coverLetter 데이터가 누락되면 InternalServerErrorException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService updateCoverLetter 자소서 수정 요청에서 content만 변경하면 modifiedAt이 수동 갱신되어 저장되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService updateCoverLetter 자소서 수정 요청에서 title이 공백이면 BadRequestException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService updateCoverLetter 자소서 수정 요청에서 QnA 중 question/answer가 공백이면 BadRequestException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService updateCoverLetter 자소서 수정 트랜잭션에서 저장 결과가 없으면 InternalServerErrorException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService listDocuments 문서 목록 조회에서 page=1이면 repository에는 adjustedPage=0으로 전달되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService listDocuments 문서 목록 조회에서 page가 0 이하이면 adjustedPage는 0으로 보정되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService bulkDeleteDocuments (updated) 일괄 삭제 요청에서 일부 documentId가 누락되면 BadRequestException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService bulkDeleteDocuments (updated) 일괄 삭제 요청에서 모두 존재하고 delete가 전부 성공하면 success=true, failedDocuments=[]가 반환되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "DocumentService bulkDeleteDocuments (updated) 일괄 삭제 요청에서 delete가 일부만 성공하면 remaining 조회 후 failedDocuments가 반환되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewService createTechInterview 유저가 유효한 문서 ID들로 기술면접 생성을 요청하면 인터뷰가 생성되고 첫 질문이 반환되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewService createTechInterview 유저가 요청한 문서 ID를 전부 찾지 못하면 BadRequestException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewService chatInterviewer 실제 AI 서비스가 중복을 감지한 종료 결과가 최종 응답까지 유지된다",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewService chatInterviewer AI 종료=false 시간초과=false 턴초과=false이면 최종 종료=false",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewService chatInterviewer AI 종료=true 시간초과=false 턴초과=false이면 최종 종료=true",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewService chatInterviewer AI 종료=false 시간초과=true 턴초과=false이면 최종 종료=true",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewService chatInterviewer AI 종료=false 시간초과=false 턴초과=true이면 최종 종료=true",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewService chatInterviewer AI 종료=true 시간초과=true 턴초과=true이면 최종 종료=true",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewService chatInterviewer 유저가 본인 인터뷰에서 다음 질문 생성을 요청하면 턴이 증가하고 다음 질문이 반환되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewService createInterviewFeedback 유저가 본인 인터뷰에 대해 피드백 생성을 요청하면 AI 피드백이 저장되고 score/feedback이 반환되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "KeySetStore 새로운 key에 addToSet을 호출하면 값이 저장되고 getSet으로 조회되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "KeySetStore 동일 key에 addToSet을 여러 번 호출하면 Set 특성상 중복 없이 저장되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "KeySetStore removeFromSet을 호출하면 특정 값이 Set에서 제거되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "KeySetStore clear를 호출하면 Set이 삭제되고 getSet은 빈 배열을 반환해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "KeySetStore addToNumber를 호출하면 숫자가 저장되고 getNumber로 조회되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "KeySetStore deleteNumber를 호출하면 숫자가 삭제되어 getNumber가 undefined를 반환해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "KeySetStore ttl이 0 이하이면 스케줄링하지 않으며 시간이 지나도 데이터가 유지되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "KeySetStore ttl이 지난 key는 cleanup 주기에서 자동 삭제되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "KeySetStore 같은 key에 다시 addToSet을 호출하면 TTL이 갱신되어 이전 만료 시점에 삭제되면 안 된다",
+        "status": "passed"
+      },
+      {
+        "name": "KeySetStore addToNumber도 TTL이 지나면 cleanup에서 자동 삭제되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "KeySetStore clear를 호출하면 스케줄에서도 제거되어 이후 cleanup 주기에서 추가 삭제 동작이 발생하지 않아야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "AuthService AuthService가 DI로 생성되면 서비스 인스턴스가 정상적으로 정의되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "AuthService googleLogin 기존 회원이 올바른 OAuth 코드로 로그인하면 accessToken/refreshToken이 발급되어 로그인되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "AuthService googleLogin 신규 회원이 올바른 OAuth 코드로 로그인하면 회원가입 후 accessToken/refreshToken이 발급되어 로그인되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "UserService UserService가 DI로 생성되면 서비스 인스턴스가 정상적으로 정의되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "UserService findExistingUser 존재하는 사용자 ID로 조회하면 사용자 엔티티가 반환되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "UserService findExistingUser 존재하지 않는 사용자 ID로 조회하면 NotFoundException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "UserService registerUser 신규 사용자 정보를 전달해 가입을 요청하면 USER 역할로 저장된 사용자 엔티티가 반환되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "UserService getUserProfile 존재하는 사용자 ID로 프로필 조회를 요청하면 (userId/email/profileUrl) 형태로 반환되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "UserService getUserProfile 존재하지 않는 사용자 ID로 프로필 조회를 요청하면 NotFoundException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "JwtAuthGuard canActivate Public Endpoint로 설정되어 있으면 토큰 없이도 접근이 허용되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "JwtAuthGuard canActivate Private Endpoint에서 유효한 Bearer 토큰을 전달하면 인증이 통과되고 request.user가 주입되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "JwtAuthGuard canActivate Private Endpoint에서 Authorization 헤더가 없으면 UnauthorizedException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "JwtAuthGuard canActivate Private Endpoint에서 Authorization 헤더가 Bearer 형식이 아니면 UnauthorizedException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "Jwt 발급/디코딩 통합 테스트 애세스 토큰을 발급하고 유효시간내의 토큰을 디코딩할 수 있다.",
+        "status": "passed"
+      },
+      {
+        "name": "Jwt 발급/디코딩 통합 테스트 유효하지 않은 토큰을 디코딩하면, \"유효하지 않은 토큰입니다.\" 예외를 반환한다.",
+        "status": "passed"
+      },
+      {
+        "name": "Jwt 발급/디코딩 통합 테스트 만료된 토큰을 디코딩하면, \"만료된 토큰입니다.\" 예외를 반환한다.",
+        "status": "passed"
+      },
+      {
+        "name": "Jwt 발급/디코딩 통합 테스트 리프레시 토큰을 발급하고 유효시간내의 토큰을 디코딩할 수 있다.",
+        "status": "passed"
+      },
+      {
+        "name": "Interview Entity validateUser 인터뷰 소유자가 자신의 인터뷰에 접근하면 예외 없이 통과되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "Interview Entity validateUser 인터뷰 소유자가 아닌 사용자가 접근하면 ForbiddenException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "Interview Entity calculateDuringTime 인터뷰가 종료되지 않은 상태에서 종료 시간을 전달하면 duringTime이 (종료-시작)으로 계산되어 저장되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "Interview Entity calculateDuringTime 이미 종료된 인터뷰에서 종료 시간을 다시 계산하려 하면 ForbiddenException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "Interview Entity calculateDuringTime 종료 시간이 시작 시간(createdAt)보다 빠르면 ForbiddenException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "Interview Entity calculateDuringTime 종료 시간이 시작 시간과 같으면 duringTime은 0으로 계산되어 저장되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "MinHeapScheduler executeAt이 더 이른 task를 push하면 peek는 가장 빠른 task를 반환해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "MinHeapScheduler pop을 호출하면 executeAt이 가장 작은 task부터 순서대로 반환되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "MinHeapScheduler remove를 호출하면 해당 key의 task가 힙에서 제거되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "MinHeapScheduler remove 대상이 존재하지 않으면 힙 상태는 변하지 않아야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "MinHeapScheduler 동일 key로 push/remove/push를 반복하면 마지막 push 값 기준으로 우선순위가 반영되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewEntity 단위 테스트 인터뷰 진행 시간을 계산한다.",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewEntity 단위 테스트 인터뷰 진행 시간이 이미 계산되어 있으면, 예외를 반환한다.",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewEntity 단위 테스트 인터뷰 진행 시간은 음수가 될 수 없다.",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewEntity 단위 테스트 사용자가 인터뷰의 소유자라면, validataeUser 메서드를 통과한다.",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewEntity 단위 테스트 사용자가 인터뷰의 소유자가 아니라면, validataeUser 메서드는 예외를 반환한다.",
+        "status": "passed"
+      },
+      {
+        "name": "KeySetStore lifecycle 모듈 중복 초기화로 타이머가 늘지 않고 종료 시 타이머가 해제된다",
+        "status": "passed"
+      }
+    ]
+  },
+  "new_regressions_on_original": {
+    "numPassedTests": 8,
+    "numFailedTests": 3,
+    "numPendingTests": 0,
+    "numPassedTestSuites": 0,
+    "numFailedTestSuites": 2,
+    "success": false,
+    "cases": [
+      {
+        "name": "KeySetStore lifecycle 모듈 중복 초기화로 타이머가 늘지 않고 종료 시 타이머가 해제된다",
+        "status": "failed"
+      },
+      {
+        "name": "InterviewService createTechInterview 유저가 유효한 문서 ID들로 기술면접 생성을 요청하면 인터뷰가 생성되고 첫 질문이 반환되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewService createTechInterview 유저가 요청한 문서 ID를 전부 찾지 못하면 BadRequestException이 발생해야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewService chatInterviewer 실제 AI 서비스가 중복을 감지한 종료 결과가 최종 응답까지 유지된다",
+        "status": "failed"
+      },
+      {
+        "name": "InterviewService chatInterviewer AI 종료=false 시간초과=false 턴초과=false이면 최종 종료=false",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewService chatInterviewer AI 종료=true 시간초과=false 턴초과=false이면 최종 종료=true",
+        "status": "failed"
+      },
+      {
+        "name": "InterviewService chatInterviewer AI 종료=false 시간초과=true 턴초과=false이면 최종 종료=true",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewService chatInterviewer AI 종료=false 시간초과=false 턴초과=true이면 최종 종료=true",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewService chatInterviewer AI 종료=true 시간초과=true 턴초과=true이면 최종 종료=true",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewService chatInterviewer 유저가 본인 인터뷰에서 다음 질문 생성을 요청하면 턴이 증가하고 다음 질문이 반환되어야 한다",
+        "status": "passed"
+      },
+      {
+        "name": "InterviewService createInterviewFeedback 유저가 본인 인터뷰에 대해 피드백 생성을 요청하면 AI 피드백이 저장되고 score/feedback이 반환되어야 한다",
+        "status": "passed"
+      }
+    ]
+  },
+  "coverage_baseline": {
+    "lines": {
+      "total": 1307,
+      "covered": 629,
+      "skipped": 0,
+      "pct": 48.12
+    },
+    "statements": {
+      "total": 1453,
+      "covered": 707,
+      "skipped": 0,
+      "pct": 48.65
+    },
+    "functions": {
+      "total": 241,
+      "covered": 76,
+      "skipped": 0,
+      "pct": 31.53
+    },
+    "branches": {
+      "total": 638,
+      "covered": 270,
+      "skipped": 0,
+      "pct": 42.31
+    },
+    "branchesTrue": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "coverage_current": {
+    "lines": {
+      "total": 1310,
+      "covered": 668,
+      "skipped": 0,
+      "pct": 50.99
+    },
+    "statements": {
+      "total": 1458,
+      "covered": 749,
+      "skipped": 0,
+      "pct": 51.37
+    },
+    "functions": {
+      "total": 242,
+      "covered": 83,
+      "skipped": 0,
+      "pct": 34.29
+    },
+    "branches": {
+      "total": 642,
+      "covered": 285,
+      "skipped": 0,
+      "pct": 44.39
+    },
+    "branchesTrue": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": 100
+    }
+  },
+  "document_e2e": "code imported; not executed in this measurement"
+}

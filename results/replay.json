@@ -1,0 +1,8 @@
+{
+  "project": "synapse-study",
+  "baseline": "75861ed7f5932c3faedbfdf93c03f983c6262c00",
+  "patches_checked": [
+    "001-local-followup.patch"
+  ],
+  "status": "applied successfully"
+}

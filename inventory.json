@@ -1,0 +1,18 @@
+[
+  {
+    "path": "patches/001-local-followup.patch",
+    "sha256": "3d69f76a4ced9bdfca1d412da48069adf9825d5a187b1a3ba17c19da05b61f47"
+  },
+  {
+    "path": "archive/local-source/packages/backend/db-benchmark.ts",
+    "sha256": "d48768b3665619201214c68737d41458fdf72a250495c24a19a127e8b88467ec"
+  },
+  {
+    "path": "archive/local-source/packages/backend/test/verify-token-usage.js",
+    "sha256": "7de494021b45d98276a0179d89ad469d52a39560d09bc7e2b8cec4f934c260d4"
+  },
+  {
+    "path": "archive/local-source/artifacts/synapse/2026-07-13-150424/reproduction.sh",
+    "sha256": "ae77260cff3f3c0fc6f822fb559487e597d00a1cb2b6cec038457fa32c5a5829"
+  }
+]

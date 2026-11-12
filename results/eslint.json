@@ -1,0 +1,12 @@
+{
+  "command": "eslint 'src/**/*.ts' 'test/unit/**/*.ts' --format json (without --fix)",
+  "file_count": 93,
+  "errors": 45,
+  "warnings": 1,
+  "diagnostics_by_rule": {
+    "prettier/prettier": 40,
+    "@typescript-eslint/no-unsafe-member-access": 4,
+    "@typescript-eslint/no-unsafe-assignment": 1,
+    "@typescript-eslint/no-unsafe-argument": 1
+  }
+}
