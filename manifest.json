@@ -1,0 +1,25 @@
+{
+  "project": "synapse-study",
+  "upstream": "https://github.com/boostcampwm2025/web23-Synapse",
+  "baseline_commit": "75861ed7f5932c3faedbfdf93c03f983c6262c00",
+  "local_snapshot_commit": "16a7ea3dad41b9a8c4f8d2656ab198944f1a1c14",
+  "published_on": "2026-11-12",
+  "purpose": "팀 프로젝트 종료 후 개인 후속 학습",
+  "ai_assistance": "로컬 변경 일부와 이관·측정 스크립트는 AI의 도움을 받아 작성. 변경과 실행 결과를 검토하며 학습합니다.",
+  "historical_local_commits": [
+    {
+      "sha": "16a7ea3dad41b9a8c4f8d2656ab198944f1a1c14",
+      "date": "2026-10-15",
+      "author": "Codex",
+      "subject": "fix: preserve interview termination and verify document deletion",
+      "changedFiles": [
+        "packages/backend/src/app.module.ts",
+        "packages/backend/src/interview/interview.service.ts",
+        "packages/backend/src/interview/stores/key-set.store.ts",
+        "packages/backend/test/e2e/document.e2e-test.ts",
+        "packages/backend/test/unit/interview/interview.service.spec.ts",
+        "packages/backend/test/unit/store/key-set.lifecycle.spec.ts"
+      ]
+    }
+  ]
+}
