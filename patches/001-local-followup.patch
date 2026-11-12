@@ -1,0 +1,216 @@
+From 16a7ea3dad41b9a8c4f8d2656ab198944f1a1c14 Mon Sep 17 00:00:00 2001
+From: Codex <codex@local.invalid>
+Date: Thu, 15 Oct 2026 03:11:31 +0900
+Subject: [PATCH] fix: preserve interview termination and verify document
+ deletion
+
+---
+ packages/backend/src/app.module.ts            |  1 +
+ .../src/interview/interview.service.ts        |  3 +-
+ .../src/interview/stores/key-set.store.ts     | 17 +++++---
+ .../backend/test/e2e/document.e2e-test.ts     | 30 +++++++++++++
+ .../unit/interview/interview.service.spec.ts  | 42 +++++++++++++++++++
+ .../test/unit/store/key-set.lifecycle.spec.ts | 12 ++++++
+ 6 files changed, 99 insertions(+), 6 deletions(-)
+ create mode 100644 packages/backend/test/unit/store/key-set.lifecycle.spec.ts
+
+diff --git a/packages/backend/src/app.module.ts b/packages/backend/src/app.module.ts
+index 61440ce..eaf3003 100644
+--- a/packages/backend/src/app.module.ts
++++ b/packages/backend/src/app.module.ts
+@@ -26,6 +26,7 @@ import { winstonOptions } from './common/logger/winston.config';
+       inject: [ConfigService],
+       useFactory: (configService: ConfigService) => ({
+         type: 'mysql',
++        connectorPackage: 'mysql2',
+         host: configService.get<string>('DB_HOST'),
+         port: configService.get<number>('DB_PORT'),
+         username: configService.get<string>('DB_USERNAME'),
+diff --git a/packages/backend/src/interview/interview.service.ts b/packages/backend/src/interview/interview.service.ts
+index 2744362..9e24705 100644
+--- a/packages/backend/src/interview/interview.service.ts
++++ b/packages/backend/src/interview/interview.service.ts
+@@ -243,7 +243,8 @@ export class InterviewService {
+ 
+     const question = await this.createQuestion(interviewId, isLastQuestion);
+ 
+-    question.isLast = isLastQuestion;
++    // AI 종료 판단(중복 방어 포함)을 시간/턴 규칙으로 덮어쓰지 않는다.
++    question.isLast = question.isLast || isLastQuestion;
+ 
+     this.keySetStore.addToNumber(interviewId, currentTurn + 1);
+ 
+diff --git a/packages/backend/src/interview/stores/key-set.store.ts b/packages/backend/src/interview/stores/key-set.store.ts
+index 829bcb8..1cf9904 100644
+--- a/packages/backend/src/interview/stores/key-set.store.ts
++++ b/packages/backend/src/interview/stores/key-set.store.ts
+@@ -1,8 +1,9 @@
+-import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
++import { Injectable, Logger, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
+ import { MinHeapScheduler } from './min-heap.scheduler';
+ 
+ @Injectable()
+-export class KeySetStore implements OnModuleInit {
++export class KeySetStore implements OnModuleInit, OnModuleDestroy {
++  private cleanupTimer?: ReturnType<typeof setInterval>;
+   private readonly store = new Map<string, Set<string>>();
+   private readonly numberStore = new Map<string, number>();
+   // TTL 관리를 위한 Min-Heap 스케줄러
+@@ -14,11 +15,17 @@ export class KeySetStore implements OnModuleInit {
+    */
+   onModuleInit() {
+     // 5초마다 만료된 키 확인
+-    setInterval(() => {
++    if (this.cleanupTimer) return;
++    this.cleanupTimer = setInterval(() => {
+       this.cleanupExpiredKeys();
+     }, 5000);
+   }
+ 
++  onModuleDestroy() {
++    if (this.cleanupTimer) clearInterval(this.cleanupTimer);
++    this.cleanupTimer = undefined;
++  }
++
+   /**
+    * 스케줄러를 확인하여 만료된 키를 스토어에서 제거
+    */
+@@ -52,7 +59,7 @@ export class KeySetStore implements OnModuleInit {
+     // TTL이 0이거나 음수면 스케줄링 하지 않음 (필요 시 정책 조정)
+     if (ttl > 0) {
+       // 기존 스케줄 제거 후 새로 등록 (TTL 갱신)
+-      // 스케줄러는 O(log N)으로 동작하므로 무거운 연산 아님
++      // remove는 findIndex O(N), push는 O(log N)이다.
+       this.scheduler.remove(key);
+       this.scheduler.push(key, Date.now() + ttl);
+     }
+@@ -102,7 +109,7 @@ export class KeySetStore implements OnModuleInit {
+     // TTL이 0이거나 음수면 스케줄링 하지 않음 (필요 시 정책 조정)
+     if (ttl > 0) {
+       // 기존 스케줄 제거 후 새로 등록 (TTL 갱신)
+-      // 스케줄러는 O(log N)으로 동작하므로 무거운 연산 아님
++      // remove는 findIndex O(N), push는 O(log N)이다.
+       this.scheduler.remove(key);
+       this.scheduler.push(key, Date.now() + ttl);
+     }
+diff --git a/packages/backend/test/e2e/document.e2e-test.ts b/packages/backend/test/e2e/document.e2e-test.ts
+index ef58cd1..9398462 100644
+--- a/packages/backend/test/e2e/document.e2e-test.ts
++++ b/packages/backend/test/e2e/document.e2e-test.ts
+@@ -167,6 +167,36 @@ describe('DocumentController (e2e)', () => {
+         .set('Authorization', `Bearer ${accessToken}`)
+         .send({ documentIds: [docId, nonExistentId] })
+         .expect(400);
++      // 거절된 요청에서 존재하던 문서는 보존되어야 한다.
++      await request(app.getHttpServer() as Server)
++        .get(`/document/${docId}/portfolio`)
++        .set('Authorization', `Bearer ${accessToken}`)
++        .expect(200);
++    });
++
++    it('다른 사용자 문서 삭제는 거절하고 소유자의 문서를 보존한다', async () => {
++      const created = await request(app.getHttpServer() as Server)
++        .post('/document/portfolio/create').set('Authorization', `Bearer ${accessToken}`)
++        .send({title: 'Ownership regression', content: 'Owner content'}).expect(201);
++      const id = created.body.documentId;
++      const otherToken = app.get(JwtService).sign({sub:'2', role:'USER'});
++      await request(app.getHttpServer() as Server).delete('/document')
++        .set('Authorization', `Bearer ${otherToken}`).send({documentIds:[id]}).expect(400);
++      await request(app.getHttpServer() as Server).get(`/document/${id}/portfolio`)
++        .set('Authorization', `Bearer ${accessToken}`).expect(200);
++    });
++
++    it('삭제한 문서의 portfolio 연관 행도 실제 DB에서 제거된다', async () => {
++      const created = await request(app.getHttpServer() as Server)
++        .post('/document/portfolio/create').set('Authorization', `Bearer ${accessToken}`)
++        .send({title:'Cascade regression',content:'Cascade content'}).expect(201);
++      const id = created.body.documentId;
++      const before = await dataSource.query('SELECT COUNT(*) AS n FROM portfolios WHERE documents_id = ?', [id]);
++      expect(Number(before[0].n)).toBe(1);
++      await request(app.getHttpServer() as Server).delete('/document')
++        .set('Authorization', `Bearer ${accessToken}`).send({documentIds:[id]}).expect(200);
++      const after = await dataSource.query('SELECT COUNT(*) AS n FROM portfolios WHERE documents_id = ?', [id]);
++      expect(Number(after[0].n)).toBe(0);
+     });
+ 
+     it('존재하지 않는 문서들만 요청 시 400 BadRequest를 반환해야 한다', async () => {
+diff --git a/packages/backend/test/unit/interview/interview.service.spec.ts b/packages/backend/test/unit/interview/interview.service.spec.ts
+index 9945973..b7e1cc8 100644
+--- a/packages/backend/test/unit/interview/interview.service.spec.ts
++++ b/packages/backend/test/unit/interview/interview.service.spec.ts
+@@ -1,5 +1,6 @@
+ import { Test, TestingModule } from '@nestjs/testing';
+ import { BadRequestException } from '@nestjs/common';
++import { ConfigService } from '@nestjs/config';
+ 
+ import { InterviewService } from '../../../src/interview/interview.service';
+ import { Interview } from '../../../src/interview/entities/interview.entity';
+@@ -153,6 +154,47 @@ describe('InterviewService', () => {
+   });
+ 
+   describe('chatInterviewer', () => {
++    afterEach(() => jest.restoreAllMocks());
++
++    it('실제 AI 서비스가 중복을 감지한 종료 결과가 최종 응답까지 유지된다', async () => {
++      const ai = new InterviewAIService(new ConfigService({CLOVA_API_URL: 'http://unused.invalid', CLOVA_API_KEY: 'test-only'}));
++      const fetchQuestion = jest.spyOn(ai as any, 'fetchAIQuestion')
++        .mockResolvedValueOnce({question: '이미 물어본 질문입니다', tags: ['test'], isLast: false})
++        .mockResolvedValueOnce({question: '면접을 마무리합니다', tags: ['test'], isLast: false});
++      (service as any).interviewAIService = ai;
++      mockUserService.findExistingUser.mockResolvedValue({userId: '1'});
++      mockInterviewRepository.findById.mockResolvedValue({validateUser: jest.fn(), createdAt: new Date()});
++      mockKeySetStore.getNumber.mockReturnValue(1);
++      mockQuestionRepository.findFiveByInterviewId.mockResolvedValueOnce([{content: '이미 물어본 질문입니다', createdAt: new Date()}]);
++      mockAnswerRepository.findFiveByInterviewId.mockResolvedValueOnce([]);
++      mockQuestionRepository.createQuestion.mockResolvedValue({questionId: 'q-duplicate', createdAt: new Date()});
++      jest.spyOn(service as any, 'checkInterviewTimeOver').mockResolvedValue(false);
++      jest.spyOn(service as any, 'checkInterviewTurnOver').mockReturnValue(false);
++      const result = await service.chatInterviewer('1', 'iv-duplicate');
++      expect(fetchQuestion).toHaveBeenCalledTimes(2);
++      expect(result).toMatchObject({question: '면접을 마무리합니다', isLast: true});
++      expect(mockQuestionRepository.createQuestion).toHaveBeenCalledWith('면접을 마무리합니다', 'iv-duplicate');
++    });
++    it.each([
++      [false, false, false, false],
++      [true, false, false, true],
++      [false, true, false, true],
++      [false, false, true, true],
++      [true, true, true, true],
++    ])('AI 종료=%s 시간초과=%s 턴초과=%s이면 최종 종료=%s', async (aiLast, timeOver, turnOver, expected) => {
++      mockUserService.findExistingUser.mockResolvedValue({ userId: '1' });
++      mockInterviewRepository.findById.mockResolvedValue({ validateUser: jest.fn(), createdAt: new Date() });
++      mockKeySetStore.getNumber.mockReturnValue(1);
++      jest.spyOn(service as any, 'checkInterviewTimeOver').mockResolvedValue(timeOver);
++      jest.spyOn(service as any, 'checkInterviewTurnOver').mockReturnValue(turnOver);
++      mockInterviewAIService.generateInterviewQuestion.mockResolvedValue({question: 'Controlled question', isLast: aiLast});
++      mockQuestionRepository.createQuestion.mockResolvedValue({questionId: 'q-terminal', createdAt: new Date()});
++      const result = await service.chatInterviewer('1', 'iv-terminal');
++      expect(result.isLast).toBe(expected);
++      expect(mockInterviewAIService.generateInterviewQuestion).toHaveBeenCalledWith([], [], expect.any(String), [], timeOver || turnOver);
++      expect(mockQuestionRepository.createQuestion).toHaveBeenCalledWith('Controlled question', 'iv-terminal');
++      jest.restoreAllMocks();
++    });
+     it('유저가 본인 인터뷰에서 다음 질문 생성을 요청하면 턴이 증가하고 다음 질문이 반환되어야 한다', async () => {
+       // Given: 유저 존재
+       const mockUser = { userId: '1' };
+diff --git a/packages/backend/test/unit/store/key-set.lifecycle.spec.ts b/packages/backend/test/unit/store/key-set.lifecycle.spec.ts
+new file mode 100644
+index 0000000..a567122
+--- /dev/null
++++ b/packages/backend/test/unit/store/key-set.lifecycle.spec.ts
+@@ -0,0 +1,12 @@
++import { KeySetStore } from '../../../src/interview/stores/key-set.store';
++describe('KeySetStore lifecycle', () => {
++  afterEach(() => jest.useRealTimers());
++  it('모듈 중복 초기화로 타이머가 늘지 않고 종료 시 타이머가 해제된다', () => {
++    jest.useFakeTimers();
++    const store = new KeySetStore();
++    store.onModuleInit(); store.onModuleInit();
++    expect(jest.getTimerCount()).toBe(1);
++    store.onModuleDestroy(); store.onModuleDestroy();
++    expect(jest.getTimerCount()).toBe(0);
++  });
++});
+-- 
+2.46.0
+

@@ -1,0 +1,548 @@
+{
+  "definition": "Production source files; fan-in/out counts distinct statically resolved internal file imports, not runtime calls. Java wildcard imports, DI wiring, reflection and unresolved TS aliases are not resolved. Cycles cover this graph only. Source lines approximate nonblank noncomment lines, not a quality score.",
+  "source_sha256": "204bca741a5671ca5a77b5279d95a7f3876601fca48f2074f56299ef9c88a6f7",
+  "files": 83,
+  "approx_source_lines": 3431,
+  "internal_edges": 179,
+  "unresolved_local_imports": 0,
+  "cycle_count": 1,
+  "cycles": [
+    [
+      "src/document/entities/cover-letter-question-answer.entity.ts",
+      "src/document/entities/cover-letter.entity.ts",
+      "src/document/entities/document.entity.ts",
+      "src/document/entities/portfolio.entity.ts",
+      "src/interview/entities/ai-persona.entity.ts",
+      "src/interview/entities/interview-answer.entity.ts",
+      "src/interview/entities/interview-document.entity.ts",
+      "src/interview/entities/interview-question.entity.ts",
+      "src/interview/entities/interview.entity.ts",
+      "src/interview/entities/live-coding-interview.entity.ts",
+      "src/interview/entities/problem.entity.ts",
+      "src/interview/entities/technical-interview.entity.ts",
+      "src/interview/entities/test-case.entity.ts",
+      "src/user/entities/user.entity.ts"
+    ]
+  ],
+  "top_fan_in": [
+    {
+      "file": "src/document/entities/document.entity.ts",
+      "fan_in": 12,
+      "fan_out": 3
+    },
+    {
+      "file": "src/interview/entities/interview.entity.ts",
+      "fan_in": 10,
+      "fan_out": 5
+    },
+    {
+      "file": "src/interview/entities/interview-question.entity.ts",
+      "fan_in": 7,
+      "fan_out": 2
+    },
+    {
+      "file": "src/interview/entities/interview-answer.entity.ts",
+      "fan_in": 6,
+      "fan_out": 1
+    },
+    {
+      "file": "src/user/entities/user.entity.ts",
+      "fan_in": 6,
+      "fan_out": 2
+    },
+    {
+      "file": "src/user/user.service.ts",
+      "fan_in": 5,
+      "fan_out": 3
+    },
+    {
+      "file": "src/document/entities/cover-letter.entity.ts",
+      "fan_in": 4,
+      "fan_out": 2
+    },
+    {
+      "file": "src/user/user.module.ts",
+      "fan_in": 4,
+      "fan_out": 3
+    },
+    {
+      "file": "src/auth/decorator/get-user.decorator.ts",
+      "fan_in": 3,
+      "fan_out": 0
+    },
+    {
+      "file": "src/auth/decorator/public.decorator.ts",
+      "fan_in": 3,
+      "fan_out": 0
+    }
+  ],
+  "top_fan_out": [
+    {
+      "file": "src/interview/interview.service.ts",
+      "fan_in": 2,
+      "fan_out": 22
+    },
+    {
+      "file": "src/interview/interview.controller.ts",
+      "fan_in": 1,
+      "fan_out": 15
+    },
+    {
+      "file": "src/document/document.controller.ts",
+      "fan_in": 1,
+      "fan_out": 14
+    },
+    {
+      "file": "src/document/document.service.ts",
+      "fan_in": 2,
+      "fan_out": 11
+    },
+    {
+      "file": "src/interview/interview.module.ts",
+      "fan_in": 1,
+      "fan_out": 11
+    },
+    {
+      "file": "src/app.module.ts",
+      "fan_in": 1,
+      "fan_out": 9
+    },
+    {
+      "file": "src/auth/auth.module.ts",
+      "fan_in": 1,
+      "fan_out": 7
+    },
+    {
+      "file": "src/document/document.module.ts",
+      "fan_in": 2,
+      "fan_out": 6
+    },
+    {
+      "file": "src/interview/entities/interview.entity.ts",
+      "fan_in": 10,
+      "fan_out": 5
+    },
+    {
+      "file": "src/auth/auth.service.ts",
+      "fan_in": 2,
+      "fan_out": 4
+    }
+  ],
+  "file_metrics": [
+    {
+      "file": "src/app.module.ts",
+      "fan_in": 1,
+      "fan_out": 9
+    },
+    {
+      "file": "src/auth/auth.controller.ts",
+      "fan_in": 1,
+      "fan_out": 3
+    },
+    {
+      "file": "src/auth/auth.module.ts",
+      "fan_in": 1,
+      "fan_out": 7
+    },
+    {
+      "file": "src/auth/auth.service.ts",
+      "fan_in": 2,
+      "fan_out": 4
+    },
+    {
+      "file": "src/auth/decorator/get-user.decorator.ts",
+      "fan_in": 3,
+      "fan_out": 0
+    },
+    {
+      "file": "src/auth/decorator/public.decorator.ts",
+      "fan_in": 3,
+      "fan_out": 0
+    },
+    {
+      "file": "src/auth/dto/token-response.dto.ts",
+      "fan_in": 2,
+      "fan_out": 0
+    },
+    {
+      "file": "src/auth/google-oauth.service.ts",
+      "fan_in": 2,
+      "fan_out": 0
+    },
+    {
+      "file": "src/auth/jwt-auth.guard.ts",
+      "fan_in": 2,
+      "fan_out": 2
+    },
+    {
+      "file": "src/auth/jwt-token.decoder.ts",
+      "fan_in": 2,
+      "fan_out": 1
+    },
+    {
+      "file": "src/auth/jwt-token.provider.ts",
+      "fan_in": 2,
+      "fan_out": 1
+    },
+    {
+      "file": "src/common/logger/winston.config.ts",
+      "fan_in": 2,
+      "fan_out": 0
+    },
+    {
+      "file": "src/common/middlewares/logger.middleware.ts",
+      "fan_in": 1,
+      "fan_out": 0
+    },
+    {
+      "file": "src/document/document.controller.ts",
+      "fan_in": 1,
+      "fan_out": 14
+    },
+    {
+      "file": "src/document/document.module.ts",
+      "fan_in": 2,
+      "fan_out": 6
+    },
+    {
+      "file": "src/document/document.service.ts",
+      "fan_in": 2,
+      "fan_out": 11
+    },
+    {
+      "file": "src/document/dto/bulk-delete-document-request.dto.ts",
+      "fan_in": 1,
+      "fan_out": 0
+    },
+    {
+      "file": "src/document/dto/bulk-delete-document-response.dto.ts",
+      "fan_in": 2,
+      "fan_out": 0
+    },
+    {
+      "file": "src/document/dto/cover-letter-detail-response.dto.ts",
+      "fan_in": 1,
+      "fan_out": 1
+    },
+    {
+      "file": "src/document/dto/create-cover-letter-request.dto.ts",
+      "fan_in": 3,
+      "fan_out": 0
+    },
+    {
+      "file": "src/document/dto/create-cover-letter-response.dto.ts",
+      "fan_in": 1,
+      "fan_out": 2
+    },
+    {
+      "file": "src/document/dto/create-portfolio-text-request.dto.ts",
+      "fan_in": 1,
+      "fan_out": 0
+    },
+    {
+      "file": "src/document/dto/create-portfolio-text-response.dto.ts",
+      "fan_in": 1,
+      "fan_out": 1
+    },
+    {
+      "file": "src/document/dto/document-summary.request.dto.ts",
+      "fan_in": 3,
+      "fan_out": 1
+    },
+    {
+      "file": "src/document/dto/document-summary.response.dto.ts",
+      "fan_in": 2,
+      "fan_out": 1
+    },
+    {
+      "file": "src/document/dto/portfolio-detail-response.dto.ts",
+      "fan_in": 1,
+      "fan_out": 1
+    },
+    {
+      "file": "src/document/dto/update-cover-letter-request.dto.ts",
+      "fan_in": 2,
+      "fan_out": 0
+    },
+    {
+      "file": "src/document/dto/update-portfolio-request.dto.ts",
+      "fan_in": 1,
+      "fan_out": 0
+    },
+    {
+      "file": "src/document/entities/cover-letter-question-answer.entity.ts",
+      "fan_in": 2,
+      "fan_out": 1
+    },
+    {
+      "file": "src/document/entities/cover-letter.entity.ts",
+      "fan_in": 4,
+      "fan_out": 2
+    },
+    {
+      "file": "src/document/entities/document.entity.ts",
+      "fan_in": 12,
+      "fan_out": 3
+    },
+    {
+      "file": "src/document/entities/portfolio.entity.ts",
+      "fan_in": 3,
+      "fan_out": 1
+    },
+    {
+      "file": "src/document/repositories/cover-letter.repository.ts",
+      "fan_in": 2,
+      "fan_out": 1
+    },
+    {
+      "file": "src/document/repositories/document.repository.ts",
+      "fan_in": 3,
+      "fan_out": 2
+    },
+    {
+      "file": "src/document/repositories/portfolio.repository.ts",
+      "fan_in": 2,
+      "fan_out": 1
+    },
+    {
+      "file": "src/health/health.controller.ts",
+      "fan_in": 1,
+      "fan_out": 2
+    },
+    {
+      "file": "src/health/health.module.ts",
+      "fan_in": 1,
+      "fan_out": 2
+    },
+    {
+      "file": "src/health/health.service.ts",
+      "fan_in": 2,
+      "fan_out": 0
+    },
+    {
+      "file": "src/interview/dto/create-feedback-request.dto.ts",
+      "fan_in": 1,
+      "fan_out": 0
+    },
+    {
+      "file": "src/interview/dto/create-interview-request.dto.ts",
+      "fan_in": 2,
+      "fan_out": 0
+    },
+    {
+      "file": "src/interview/dto/create-interview-response.dto.ts",
+      "fan_in": 2,
+      "fan_out": 0
+    },
+    {
+      "file": "src/interview/dto/interview-answer-request.dto.ts",
+      "fan_in": 1,
+      "fan_out": 0
+    },
+    {
+      "file": "src/interview/dto/interview-answer-response.dto.ts",
+      "fan_in": 1,
+      "fan_out": 0
+    },
+    {
+      "file": "src/interview/dto/interview-chat-history-response.dto.ts",
+      "fan_in": 2,
+      "fan_out": 2
+    },
+    {
+      "file": "src/interview/dto/interview-during-time-response.dto.ts",
+      "fan_in": 2,
+      "fan_out": 0
+    },
+    {
+      "file": "src/interview/dto/interview-feedback-response.dto.ts",
+      "fan_in": 3,
+      "fan_out": 0
+    },
+    {
+      "file": "src/interview/dto/interview-question-request.dto.ts",
+      "fan_in": 1,
+      "fan_out": 0
+    },
+    {
+      "file": "src/interview/dto/interview-question-response.dto.ts",
+      "fan_in": 1,
+      "fan_out": 0
+    },
+    {
+      "file": "src/interview/dto/interview-stop-request.dto.ts",
+      "fan_in": 1,
+      "fan_out": 0
+    },
+    {
+      "file": "src/interview/dto/interview-summary.request.dto.ts",
+      "fan_in": 3,
+      "fan_out": 1
+    },
+    {
+      "file": "src/interview/dto/interview-summary.response.dto.ts",
+      "fan_in": 2,
+      "fan_out": 1
+    },
+    {
+      "file": "src/interview/entities/ai-persona.entity.ts",
+      "fan_in": 1,
+      "fan_out": 1
+    },
+    {
+      "file": "src/interview/entities/interview-answer.entity.ts",
+      "fan_in": 6,
+      "fan_out": 1
+    },
+    {
+      "file": "src/interview/entities/interview-document.entity.ts",
+      "fan_in": 1,
+      "fan_out": 2
+    },
+    {
+      "file": "src/interview/entities/interview-question.entity.ts",
+      "fan_in": 7,
+      "fan_out": 2
+    },
+    {
+      "file": "src/interview/entities/interview.entity.ts",
+      "fan_in": 10,
+      "fan_out": 5
+    },
+    {
+      "file": "src/interview/entities/live-coding-interview.entity.ts",
+      "fan_in": 2,
+      "fan_out": 2
+    },
+    {
+      "file": "src/interview/entities/problem.entity.ts",
+      "fan_in": 2,
+      "fan_out": 2
+    },
+    {
+      "file": "src/interview/entities/technical-interview.entity.ts",
+      "fan_in": 2,
+      "fan_out": 2
+    },
+    {
+      "file": "src/interview/entities/test-case.entity.ts",
+      "fan_in": 1,
+      "fan_out": 1
+    },
+    {
+      "file": "src/interview/interview-ai.service.ts",
+      "fan_in": 2,
+      "fan_out": 3
+    },
+    {
+      "file": "src/interview/interview-feedback.service.ts",
+      "fan_in": 2,
+      "fan_out": 4
+    },
+    {
+      "file": "src/interview/interview.constants.ts",
+      "fan_in": 3,
+      "fan_out": 0
+    },
+    {
+      "file": "src/interview/interview.controller.ts",
+      "fan_in": 1,
+      "fan_out": 15
+    },
+    {
+      "file": "src/interview/interview.module.ts",
+      "fan_in": 1,
+      "fan_out": 11
+    },
+    {
+      "file": "src/interview/interview.repository.ts",
+      "fan_in": 2,
+      "fan_out": 2
+    },
+    {
+      "file": "src/interview/interview.service.ts",
+      "fan_in": 2,
+      "fan_out": 22
+    },
+    {
+      "file": "src/interview/repositories/answers.repository.ts",
+      "fan_in": 2,
+      "fan_out": 1
+    },
+    {
+      "file": "src/interview/repositories/questions.repository.ts",
+      "fan_in": 2,
+      "fan_out": 2
+    },
+    {
+      "file": "src/interview/stores/key-set.store.ts",
+      "fan_in": 2,
+      "fan_out": 1
+    },
+    {
+      "file": "src/interview/stores/min-heap.scheduler.ts",
+      "fan_in": 1,
+      "fan_out": 0
+    },
+    {
+      "file": "src/interview/stt.service.ts",
+      "fan_in": 2,
+      "fan_out": 0
+    },
+    {
+      "file": "src/main.ts",
+      "fan_in": 0,
+      "fan_out": 3
+    },
+    {
+      "file": "src/migrations/1770106092727-Init.ts",
+      "fan_in": 0,
+      "fan_out": 0
+    },
+    {
+      "file": "src/seed/seed.module.ts",
+      "fan_in": 1,
+      "fan_out": 1
+    },
+    {
+      "file": "src/seed/seed.service.ts",
+      "fan_in": 2,
+      "fan_out": 0
+    },
+    {
+      "file": "src/typeorm-datasource.ts",
+      "fan_in": 0,
+      "fan_out": 0
+    },
+    {
+      "file": "src/user/dto/user-info-response.dto.ts",
+      "fan_in": 2,
+      "fan_out": 0
+    },
+    {
+      "file": "src/user/entities/user.entity.ts",
+      "fan_in": 6,
+      "fan_out": 2
+    },
+    {
+      "file": "src/user/user.controller.ts",
+      "fan_in": 1,
+      "fan_out": 3
+    },
+    {
+      "file": "src/user/user.module.ts",
+      "fan_in": 4,
+      "fan_out": 3
+    },
+    {
+      "file": "src/user/user.repository.ts",
+      "fan_in": 2,
+      "fan_out": 1
+    },
+    {
+      "file": "src/user/user.service.ts",
+      "fan_in": 5,
+      "fan_out": 3
+    }
+  ]
+}
